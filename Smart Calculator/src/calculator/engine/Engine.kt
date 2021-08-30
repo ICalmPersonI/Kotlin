@@ -21,7 +21,7 @@ class Engine(private var inputLine: String, private val variableStorage: Mutable
             } else {
                 val first: BigInteger = stack.pop()
                 val second: BigInteger = stack.pop()
-                when(elem) {
+                when (elem) {
                     "+" -> stack.push(first + second)
                     "-" -> stack.push(second - first)
                     "*" -> stack.push(first * second)

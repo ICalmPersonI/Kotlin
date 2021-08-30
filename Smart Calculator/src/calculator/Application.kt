@@ -69,19 +69,21 @@ class Application {
     }
 
     private fun equation(line: String) {
-        if (line.contains(")") && !line.contains("(")) println("Invalid expression")
-        else if (line.contains("(") && !line.contains(")")) println("Invalid expression")
-        else if (line.contains("**")) println("Invalid expression")
-        else if (line.contains("//")) println("Invalid expression")
-        else {
-            var allVariablesAvailable: Boolean = true
-            line.filter { it.isLetter() }.forEach {
-                allVariablesAvailable = allVariablesAvailable and variableStorage.containsKey(it.toString())
+        when {
+            (line.contains(")") && !line.contains("("))
+                    || (line.contains("(") && !line.contains(")"))
+                    || line.contains("**")
+                    || line.contains("//") -> println("Invalid expression")
+            else -> {
+                var allVariablesAvailable: Boolean = true
+                line.filter { it.isLetter() }.forEach {
+                    allVariablesAvailable = allVariablesAvailable and variableStorage.containsKey(it.toString())
+                }
+                if (allVariablesAvailable) {
+                    val calculationEngine: Engine = Engine(line, variableStorage)
+                    println(calculationEngine.calculation())
+                } else println("Unknown variable")
             }
-            if (allVariablesAvailable) {
-                val calculationEngine: Engine = Engine(line, variableStorage)
-                println(calculationEngine.calculation())
-            } else println("Unknown variable")
         }
     }
 }
